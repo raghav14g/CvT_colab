@@ -76,7 +76,7 @@ def build_dataloader(cfg, is_train=True, distributed=False):
         timm_cfg = cfg.AUG.TIMM_AUG
         data_loader = create_loader(
             dataset,
-            input_size=cfg.TRAIN.IMAGE_SIZE[0],
+            input_size=(3, cfg.TRAIN.IMAGE_SIZE[0], cfg.TRAIN.IMAGE_SIZE[1]),
             batch_size=cfg.TRAIN.BATCH_SIZE_PER_GPU,
             is_training=True,
             use_prefetcher=True,
