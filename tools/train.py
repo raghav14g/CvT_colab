@@ -162,10 +162,7 @@ def main():
         )
 
         lr_scheduler.step(epoch=epoch+1)
-        if config.TRAIN.LR_SCHEDULER.METHOD == 'timm':
-            lr = lr_scheduler.get_epoch_values(epoch+1)[0]
-        else:
-            lr = lr_scheduler.get_last_lr()[0]
+        lr = lr_scheduler.get_last_lr()[0]
         logging.info(f'=> lr: {lr}')
 
         save_checkpoint_on_master(
