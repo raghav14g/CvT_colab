@@ -150,7 +150,12 @@ _C.FINETUNE.LR_SCHEDULER.DECAY_TYPE = 'step'
 # debug
 _C.DEBUG = CN()
 _C.DEBUG.DEBUG = False
-
+# Add the SWA Configuration Block
+_C.SWA = CN()
+_C.SWA.ENABLED = False
+_C.SWA.START_EPOCH = 50
+_C.SWA.LR_FACTOR = 0.05
+_C.SWA.ANNEAL_EPOCHS = 10
 
 def _update_config_from_file(config, cfg_file):
     config.defrost()
