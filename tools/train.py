@@ -162,7 +162,7 @@ def main():
         )
 
         lr_scheduler.step(epoch=epoch+1)
-        lr = lr_scheduler.get_last_lr()[0]
+        lr = optimizer.param_groups[0]['lr']
         logging.info(f'=> lr: {lr}')
 
         save_checkpoint_on_master(
