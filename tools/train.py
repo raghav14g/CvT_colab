@@ -67,6 +67,24 @@ def main():
     final_output_dir = create_logger(config, args.cfg, 'train')
     tb_log_dir = final_output_dir
 
+    print("\n--- MODEL ARCHITECTURE CONFIRMATION ---")
+    # Check the initial patch embedding parameters (Stage 0)
+    stage0_spec = config.MODEL.SPEC
+    # 1. Patch Size & Stride (ViT=16/16, CvT=4/4)
+    print(f"Initial Patch Size: {stage0_spec.PATCH_SIZE[0]}")
+    print(f"Initial Patch Stride: {stage0_spec.PATCH_STRIDE[0]}")
+    # 2. Convolutional Projection Flag (ViT=False, CvT=True)
+    # This assumes you have correctly added CONV_PROJ to default.py
+    conv_proj_status = stage0_spec.CONV_PROJ[0]
+    print(f"Convolutional Projection Status (per stage): {conv_proj_status}")
+    if stage0_spec.PATCH_SIZE[0] == 16 and conv_proj_status == False:
+        print("✅ CONFIRMED: Running as VANILLA VISION TRANSFORMER (ViT)!")
+    elif stage0_spec.PATCH_SIZE[0] < 16 and conv_proj_status == True:
+        print("⚠️ CONFIRMED: Running as CONVOLUTIONAL VISION TRANSFORMER (CvT)!")
+    else:
+        print("❓ CONFIRMATION AMBIGUOUS: Check configuration file for intermediate settings.")
+    print("---------------------------------------\n")
+
     if comm.is_main_process():
         logging.info("=> collecting env info (might take some time)")
         logging.info("\n" + get_pretty_env_info())
