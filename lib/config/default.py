@@ -44,7 +44,7 @@ _C.MODEL.PRETRAINED = ''
 _C.MODEL.PRETRAINED_LAYERS = ['*']
 _C.MODEL.NUM_CLASSES = 1000
 _C.MODEL.SPEC = CN(new_allowed=True)
-
+_C.MODEL.SPEC.CONV_PROJ = [True, True, True] # Default CvT mode
 _C.LOSS = CN(new_allowed=True)
 _C.LOSS.LABEL_SMOOTHING = 0.0
 _C.LOSS.LOSS = 'softmax'
