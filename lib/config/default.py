@@ -157,6 +157,15 @@ _C.SWA.START_EPOCH = 50
 _C.SWA.LR_FACTOR = 0.05
 _C.SWA.ANNEAL_EPOCHS = 10
 
+# 1. Update MODEL.NAME default:
+_C.MODEL.NAME = 'VanillaCNN' # Set the default model name to the new CNN
+
+# 2. Add a new CNN_SPEC block (required since MODEL.SPEC is structured for CvT)
+# This uses the common CNN structure parameters (depths and channels per stage)
+_C.CNN_SPEC = CN()
+_C.CNN_SPEC.DEPTHS = [2, 2, 2, 2]         # Number of blocks in each of the 4 stages
+_C.CNN_SPEC.CHANNELS = [64, 64, 128, 256, 512] # Channels: C0(stem output), C1, C2, C3, C4
+
 def _update_config_from_file(config, cfg_file):
     config.defrost()
     with open(cfg_file, 'r') as f:
