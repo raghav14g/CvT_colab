@@ -1,6 +1,7 @@
 from .registry import model_entrypoints
 from .registry import is_model
-
+# Import your new CNN model
+from .vanilla_cnn import VanillaCNN
 
 def build_model(config, **kwargs):
     model_name = config.MODEL.NAME
