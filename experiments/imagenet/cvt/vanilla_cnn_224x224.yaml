@@ -1,0 +1,32 @@
+# experiments/imagenet/cnn/vanilla_cnn_224x224.yaml
+
+MODEL:
+  NAME: 'VanillaCNN'
+  NUM_CLASSES: 200 # Assuming Tiny ImageNet
+  # We still include DIMS for compatibility with other parts of the script
+  # but they are IGNORED by the VanillaCNN class.
+  SPEC:
+    DEPTH: [1, 2, 10]
+    DIM_EMBED: [768, 768, 768] 
+    
+CNN_SPEC:
+  DEPTHS: [2, 2, 4, 2] # Example: ResNet-18-like depths
+  CHANNELS: [64, 64, 128, 256, 512]
+  
+DATA:
+  DATASET: 'imagenet'
+  BATCH_SIZE: 128
+  CROP_PCT: 0.875
+  IMG_SIZE: 224
+
+TRAIN:
+  EPOCHS: 100
+  LR: 0.01 
+  SCHEDULER: 'cosine'
+  OPTIMIZER: 'sgd' # CNNs often start well with SGD
+  MOMENTUM: 0.9
+  WEIGHT_DECAY: 0.0001
+  WARMUP_EPOCHS: 5
+
+VALIDATION:
+  VALIDATION_START_EPOCH: 0 # Start validation immediately
