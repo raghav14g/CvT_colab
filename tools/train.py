@@ -66,7 +66,7 @@ def main():
     update_config(config, args)
     final_output_dir = create_logger(config, args.cfg, 'train')
     tb_log_dir = final_output_dir
-
+'''
     print("\n--- MODEL ARCHITECTURE CONFIRMATION ---")
     # Check the initial patch embedding parameters (Stage 0)
     stage0_spec = config.MODEL.SPEC
@@ -84,7 +84,7 @@ def main():
     else:
         print("❓ CONFIRMATION AMBIGUOUS: Check configuration file for intermediate settings.")
     print("---------------------------------------\n")
-
+'''
     if comm.is_main_process():
         logging.info("=> collecting env info (might take some time)")
         logging.info("\n" + get_pretty_env_info())
