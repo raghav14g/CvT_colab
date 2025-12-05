@@ -62,6 +62,7 @@ def main():
 
     init_distributed(args)
     setup_cudnn(config)
+#CNN+
 # 71: print("\n--- MODEL ARCHITECTURE CONFIRMATION ---")
 
     if config.MODEL.NAME in ['CvT', 'ViT']:
@@ -75,6 +76,7 @@ def main():
         print(f"Model Name: {config.MODEL.NAME}")
         print(f"CNN Channels: {config.CNN_SPEC.CHANNELS}")
         print(f"CNN Depths: {config.CNN_SPEC.DEPTHS}")
+#CNN-
     update_config(config, args)
     final_output_dir = create_logger(config, args.cfg, 'train')
     tb_log_dir = final_output_dir
