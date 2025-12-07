@@ -30,7 +30,7 @@ class BasicConvBlock(nn.Module):
 
 # --- Vanilla CNN Model ---
 @MODEL_REGISTRY.register_module
-class VanillaCNN(nn.Module):
+class vanilla_cnn(nn.Module):
     def __init__(self, config):
         super().__init__()
         
