@@ -156,7 +156,7 @@ _C.SWA.ENABLED = False
 _C.SWA.START_EPOCH = 50
 _C.SWA.LR_FACTOR = 0.05
 _C.SWA.ANNEAL_EPOCHS = 10
-
+#CNN+
 # 1. Define all missing Top-Level Nodes (Critical Fix)
 _C.SYSTEM = CN() 
 _C.OUTPUT = CN()
@@ -171,7 +171,8 @@ _C.CNN_SPEC.CHANNELS = [64, 64, 128, 256, 512] # Channels: Stem output, Stage 1-
 # 3. Model Configuration Updates
 _C.MODEL.NAME = 'VanillaCNN' # Default name
 # ... (Other model parameters) ...
-
+_C.DATA = CN()
+_C.VALIDATION = CN()
 # 4. DATA Configuration Updates
 _C.DATA.DATASET = 'imagenet'
 _C.DATA.BATCH_SIZE = 64
@@ -190,8 +191,9 @@ _C.TRAIN.WEIGHT_DECAY = 0.0001
 _C.TRAIN.WARMUP_EPOCHS = 5
 
 # Nested LR_SCHEDULER structure (Fixes AttributeError: METHOD)
-_C.TRAIN.LR_SCHEDULER = CN()
-_C.TRAIN.LR_SCHEDULER.METHOD = 'cosine'
+_C.TRAIN.LR_SCHEDULER.METHOD = 'timm'
+_C.TRAIN.LR_SCHEDULER.ARGS = CN(new_allowed=True)
+#_C.TRAIN.LR_SCHEDULER.ARGS.sched = 'cosine'
 _C.TRAIN.LR_SCHEDULER.DECAY_RATE = 0.1
 _C.TRAIN.LR_SCHEDULER.DECAY_EPOCHS = 30
 
@@ -203,7 +205,7 @@ _C.VALIDATION.IMG_SIZE = 224
 # 7. CHECKPOINT Configuration Updates
 _C.CHECKPOINT.RESUME_FROM = '' 
 _C.CHECKPOINT.AUTO_RESUME = False # Fixes likely error
-
+#CNN-
 def _update_config_from_file(config, cfg_file):
     config.defrost()
     with open(cfg_file, 'r') as f:
