@@ -1,0 +1,60 @@
+# experiments/imagenet/cnn/vanilla_cnn_224x224.yaml
+
+MODEL:
+  NAME: 'vanilla_cnn'
+  NUM_CLASSES: 200 # Assuming Tiny ImageNet
+  # We still include DIMS for compatibility with other parts of the script
+  # but they are IGNORED by the VanillaCNN class.
+  SPEC:
+    DEPTH: [1, 2, 10]
+    DIM_EMBED: [768, 768, 768] 
+    
+CNN_SPEC:
+  DEPTHS: [2, 2, 4, 2] # Example: ResNet-18-like depths
+  CHANNELS: [64, 64, 128, 256, 512]
+  
+DATASET:
+  DATASET: 'imagenet'
+  #BATCH_SIZE: 128
+  #CROP_PCT: 0.875
+  #IMG_SIZE: 224
+  DATA_FORMAT: 'jpg'
+  ROOT: 'DATASET/imagenet/'
+  TEST_SET: 'val'
+  TRAIN_SET: 'train'
+
+#TRAIN:
+#  EPOCHS: 100
+#  LR: 0.01 
+#  SCHEDULER: 'cosine'
+#  OPTIMIZER: 'sgd' # CNNs often start well with SGD
+#  MOMENTUM: 0.9
+#  WEIGHT_DECAY: 0.0001
+#  WARMUP_EPOCHS: 5
+TEST:
+  BATCH_SIZE_PER_GPU: 32
+  IMAGE_SIZE: [224, 224]
+  MODEL_FILE: ''
+  INTERPOLATION: 3
+TRAIN:
+  BATCH_SIZE_PER_GPU: 256
+  LR: 0.01
+  IMAGE_SIZE: [224, 224]
+  BEGIN_EPOCH: 0
+  END_EPOCH: 100
+  LR_SCHEDULER:
+    METHOD: 'timm'
+    ARGS:
+      sched: 'cosine'
+      warmup_epochs: 5
+      warmup_lr: 0.01
+      min_lr: 0.01
+      cooldown_epochs: 10
+      decay_rate: 0.0001
+  OPTIMIZER: sgd
+  WD: 0.05
+  WITHOUT_WD_LIST: ['bn', 'bias', 'ln']
+  SHUFFLE: true
+
+VALIDATION:
+  VALIDATION_START_EPOCH: 0 # Start validation immediately
