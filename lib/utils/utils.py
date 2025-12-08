@@ -19,7 +19,8 @@ from ptflops import get_model_complexity_info
 
 
 def setup_logger(final_output_dir, rank, phase):
-    time_str = time.strftime('%Y-%m-%d-%H-%M')
+    #time_str = time.strftime('%Y-%m-%d-%H-%M')
+    time_str = 0
     log_file = '{}_{}_rank{}.txt'.format(phase, time_str, rank)
     final_log_file = os.path.join(final_output_dir, log_file)
     head = '%(asctime)-15s:[P:%(process)d]:' + comm.head + ' %(message)s'
