@@ -64,41 +64,39 @@ def main():
     setup_cudnn(config)
 #CNN+
 # 71: print("\n--- MODEL ARCHITECTURE CONFIRMATION ---")
-
-    if config.MODEL.NAME in ['CvT', 'ViT']:
-        # Existing transformer-specific print statements
-        stage0_spec = config.MODEL.SPEC.STAGES[0] 
-        print(f"Initial Patch Size: {stage0_spec.PATCH_SIZE[0]}")
-        print(f"Initial Dim Embed: {stage0_spec.DIM_EMBED[0]}")
-        print(f"Initial Depth: {stage0_spec.DEPTH[0]}")
-    else:
+#
+#    if config.MODEL.NAME in ['CvT', 'ViT']:
+#        # Existing transformer-specific print statements
+#        stage0_spec = config.MODEL.SPEC.STAGES[0] 
+#        print(f"Initial Patch Size: {stage0_spec.PATCH_SIZE[0]}")
+#        print(f"Initial Dim Embed: {stage0_spec.DIM_EMBED[0]}")
+#        print(f"Initial Depth: {stage0_spec.DEPTH[0]}")
+#    else:
         # Print CNN-specific info instead
-        print(f"Model Name: {config.MODEL.NAME}")
-        print(f"CNN Channels: {config.CNN_SPEC.CHANNELS}")
-        print(f"CNN Depths: {config.CNN_SPEC.DEPTHS}")
+#        print(f"Model Name: {config.MODEL.NAME}")
+#        print(f"CNN Channels: {config.CNN_SPEC.CHANNELS}")
+#        print(f"CNN Depths: {config.CNN_SPEC.DEPTHS}")
 #CNN-
     update_config(config, args)
     final_output_dir = create_logger(config, args.cfg, 'train')
     tb_log_dir = final_output_dir
-'''
-    print("\n--- MODEL ARCHITECTURE CONFIRMATION ---")
+#    print("\n--- MODEL ARCHITECTURE CONFIRMATION ---")
     # Check the initial patch embedding parameters (Stage 0)
-    stage0_spec = config.MODEL.SPEC
+#    stage0_spec = config.MODEL.SPEC
     # 1. Patch Size & Stride (ViT=16/16, CvT=4/4)
-    print(f"Initial Patch Size: {stage0_spec.PATCH_SIZE[0]}")
-    print(f"Initial Patch Stride: {stage0_spec.PATCH_STRIDE[0]}")
+#    print(f"Initial Patch Size: {stage0_spec.PATCH_SIZE[0]}")
+#    print(f"Initial Patch Stride: {stage0_spec.PATCH_STRIDE[0]}")
     # 2. Convolutional Projection Flag (ViT=False, CvT=True)
     # This assumes you have correctly added CONV_PROJ to default.py
-    conv_proj_status = stage0_spec.CONV_PROJ[0]
-    print(f"Convolutional Projection Status (per stage): {conv_proj_status}")
-    if stage0_spec.PATCH_SIZE[0] == 16 and conv_proj_status == False:
-        print("✅ CONFIRMED: Running as VANILLA VISION TRANSFORMER (ViT)!")
-    elif stage0_spec.PATCH_SIZE[0] < 16 and conv_proj_status == True:
-        print("⚠️ CONFIRMED: Running as CONVOLUTIONAL VISION TRANSFORMER (CvT)!")
-    else:
-        print("❓ CONFIRMATION AMBIGUOUS: Check configuration file for intermediate settings.")
-    print("---------------------------------------\n")
-'''
+#    conv_proj_status = stage0_spec.CONV_PROJ[0]
+#    print(f"Convolutional Projection Status (per stage): {conv_proj_status}")
+#    if stage0_spec.PATCH_SIZE[0] == 16 and conv_proj_status == False:
+#        print("✅ CONFIRMED: Running as VANILLA VISION TRANSFORMER (ViT)!")
+#    elif stage0_spec.PATCH_SIZE[0] < 16 and conv_proj_status == True:
+#        print("⚠️ CONFIRMED: Running as CONVOLUTIONAL VISION TRANSFORMER (CvT)!")
+#    else:
+#        print("❓ CONFIRMATION AMBIGUOUS: Check configuration file for intermediate settings.")
+#    print("---------------------------------------\n")
     if comm.is_main_process():
         logging.info("=> collecting env info (might take some time)")
         logging.info("\n" + get_pretty_env_info())
